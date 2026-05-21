@@ -1,7 +1,7 @@
 from langchain_community.vectorstores import Chroma
 
 from utils.embeddings import embeddings
-from utils.llm import llm
+from utils.llm import get_llm
 
 
 # Load Vector Database
@@ -17,7 +17,13 @@ retriever = db.as_retriever(
 )
 
 
-def resume_agent(question):
+def resume_agent(
+    question,
+    resume_text="",
+    model_name="tinyllama"
+):
+
+    llm = get_llm(model_name)
 
     docs = retriever.invoke(question)
 
@@ -28,7 +34,16 @@ def resume_agent(question):
     prompt = f"""
     You are a Resume Expert.
 
-    Use ONLY the provided context.
+    Resume Content:
+    {resume_text}
+
+    Also analyze the uploaded resume and provide:
+    - ATS suggestions
+    - missing skills
+    - resume improvements
+    - project recommendations
+
+    Answer briefly using the provided context.
 
     Context:
     {context}

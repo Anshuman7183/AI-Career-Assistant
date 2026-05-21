@@ -1,58 +1,24 @@
 # AI Career Assistant
 
-A Multi-Agent RAG-based AI Career Assistant built using LangGraph, LangChain, ChromaDB, HuggingFace, and Streamlit.
+An Agentic AI based Career Guidance System built using LangChain, LangGraph, Ollama, ChromaDB, and Streamlit.
 
-This system uses multiple AI agents with separate datasets and vector databases to provide accurate career guidance related to:
-- Skills
-- Jobs
-- Resume Building
-- Interview Preparation
+This project uses multiple AI agents with separate datasets and vector databases to provide accurate and context-aware career guidance.
 
 ---
 
 # Features
 
-- Multi-Agent Architecture
-- Retrieval Augmented Generation (RAG)
-- Semantic Search using Vector Databases
-- Resume Guidance
-- Interview Preparation
+- Multi-Agent AI Architecture
+- RAG (Retrieval Augmented Generation)
+- Multi-LLM Support using Ollama
+- Resume Upload and Analysis
+- ChromaDB Vector Database
+- LangGraph Workflow Orchestration
+- Streamlit Frontend
+- ATS Resume Suggestions
 - Career Roadmaps
+- Interview Preparation Guidance
 - Job Market Insights
-- Skill Recommendations
-- Streamlit Web Interface
-
----
-
-# Tech Stack
-
-- Python
-- LangChain
-- LangGraph
-- ChromaDB
-- HuggingFace Transformers
-- Sentence Transformers
-- Streamlit
-- Pandas
-
----
-
-# Project Architecture
-
-User Question
-↓
-LangGraph Workflow
-↓
-Skills Agent
-Jobs Agent
-Interview Agent
-Resume Agent
-↓
-Each Agent retrieves relevant context from its own Vector Database
-↓
-LLM combines all responses
-↓
-Final Career Guidance Response
 
 ---
 
@@ -60,64 +26,98 @@ Final Career Guidance Response
 
 ## 1. Skills Agent
 Provides:
-- required skills
-- technologies
-- learning roadmaps
+- Required skills
+- Technologies
+- Learning roadmap
 
 Dataset:
-- career_skills_dataset.csv
+- Career skills dataset
 
 ---
 
 ## 2. Job Agent
 Provides:
-- hiring trends
-- company expectations
-- required technologies
+- Hiring trends
+- Company requirements
+- Important technologies
+- Job expectations
 
 Dataset:
-- jobs_dataset.csv
+- Job market dataset
 
 ---
 
 ## 3. Interview Agent
 Provides:
-- interview questions
-- preparation strategies
-- important topics
+- Interview preparation
+- Common interview questions
+- Important topics
+- Preparation strategies
 
 Dataset:
-- interview_questions_dataset.csv
+- Interview questions dataset
 
 ---
 
 ## 4. Resume Agent
 Provides:
-- ATS resume tips
-- resume improvements
-- project suggestions
+- ATS suggestions
+- Missing skills
+- Resume improvements
+- Project recommendations
 
 Dataset:
-- sample resumes (.docx)
+- Resume dataset + uploaded resume
 
 ---
 
-# Folder Structure
+# Tech Stack
+
+## Frontend
+- Streamlit
+
+## Backend
+- Python
+
+## Frameworks
+- LangChain
+- LangGraph
+
+## Vector Database
+- ChromaDB
+
+## Embeddings
+- HuggingFace Embeddings
+
+## LLMs
+- TinyLlama
+- Phi
+- Mistral
+
+## Local LLM Runtime
+- Ollama
+
+---
+
+# Project Architecture
 
 ```text
-AI-Career-Assistant/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-│
-├── data/
-│   ├── skills/
-│   ├── jobs/
-│   ├── interviews/
-│   └── resumes/
-│
-├── vectorstores/
+User Question
+      ↓
+Streamlit UI
+      ↓
+LangGraph Workflow
+      ↓
+Multiple AI Agents
+      ↓
+ChromaDB Retrieval
+      ↓
+Ollama LLMs
+      ↓
+Final Aggregated Response
+
+Folder Structure
+AI Career Assistant/
 │
 ├── agents/
 │   ├── skill_agent.py
@@ -125,10 +125,26 @@ AI-Career-Assistant/
 │   ├── interview_agent.py
 │   └── resume_agent.py
 │
+├── data/
+│   ├── skills/
+│   ├── jobs/
+│   ├── interviews/
+│   └── resumes/
+│
 ├── graph/
 │   └── workflow.py
 │
 ├── utils/
 │   ├── embeddings.py
 │   ├── llm.py
+│   ├── resume_parser.py
 │   └── vectorstore.py
+│
+├── vectorstores/
+│
+├── .streamlit/
+│   └── config.toml
+│
+├── app.py
+├── requirements.txt
+└── README.md

@@ -1,7 +1,7 @@
 from langchain_community.vectorstores import Chroma
 
 from utils.embeddings import embeddings
-from utils.llm import llm
+from utils.llm import get_llm
 
 
 # Load Vector Database
@@ -17,7 +17,9 @@ retriever = db.as_retriever(
 )
 
 
-def interview_agent(question):
+def interview_agent(question, model_name):
+
+    llm = get_llm(model_name)
 
     docs = retriever.invoke(question)
 
@@ -28,7 +30,7 @@ def interview_agent(question):
     prompt = f"""
     You are an Interview Preparation Expert.
 
-    Use ONLY the provided context.
+    Answer briefly using the provided context.
 
     Context:
     {context}

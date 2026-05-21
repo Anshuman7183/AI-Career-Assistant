@@ -1,7 +1,7 @@
 from langchain_community.vectorstores import Chroma
 
 from utils.embeddings import embeddings
-from utils.llm import llm
+from utils.llm import get_llm
 
 # Load Vector Database
 db = Chroma(
@@ -14,7 +14,9 @@ retriever = db.as_retriever(
     search_kwargs={"k": 3}
 )
 
-def job_agent(question):
+def job_agent(question, model_name):
+
+    llm = get_llm(model_name)
 
     docs = retriever.invoke(question)
 
@@ -25,7 +27,7 @@ def job_agent(question):
     prompt = f"""
     You are a Job Market Expert.
 
-    Use ONLY the provided context.
+    Answer briefly using the provided context.
 
     Context:
     {context}
